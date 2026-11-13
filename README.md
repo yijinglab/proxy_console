@@ -1,8 +1,11 @@
 # proxy_console
 浏览器代理管理工具 Browser Proxy Management Tool
 
+<img width="734" height="1096" alt="image" src="https://m-1254331109.cos.ap-guangzhou.myqcloud.com/202611131802397.png?imageMogr2/format/webp" />
 
-<img width="734" height="1096" alt="image" src="https://github.com/user-attachments/assets/a360c09a-e7cb-47c0-82fe-4ccfef935137" />
+**设置页面**
 
-<img width="1509" height="3663" alt="image" src="https://github.com/user-attachments/assets/27d60676-c34e-4c5b-b3f2-dd59b75212c0" />
+![image-20261113180318394](https://m-1254331109.cos.ap-guangzhou.myqcloud.com/202611131803554.png?imageMogr2/format/webp)
+
+![image-20261113180342256](https://m-1254331109.cos.ap-guangzhou.myqcloud.com/202611131803418.png?imageMogr2/format/webp)
 
