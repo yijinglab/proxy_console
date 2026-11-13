@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代理控制台 · 设置</title>
+  <script type="module" crossorigin src="/assets/index.html-DR_z-BTT.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/flow-jkkz6j54.js">
+  <link rel="modulepreload" crossorigin href="/assets/profiles-DEoUAxra.js">
+  <link rel="stylesheet" crossorigin href="/assets/flow-DfcvRf-P.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-mCovmbe2.css">
+</head>
+<body>
+<main class="page">
+  <h1 class="sr-only">代理控制台设置：编辑情景、分流规则与查看权限说明</h1>
+
+  <header class="page-head">
+    <div class="head-left">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div>
+        <h1>设置</h1>
+        <p>配置情景与分流规则。所有数据只保存在本机。</p>
+      </div>
+    </div>
+    <span class="preview-chip hidden" id="previewChip">预览模式</span>
+  </header>
+
+  <section class="card flow-card">
+    <div class="flow-head">
+      <div>
+        <h2>流量走向</h2>
+        <p>依据当前配置实时生成，修改表单即时更新</p>
+      </div>
+      <span class="flow-live"><i></i>实时</span>
+    </div>
+    <div class="flow-canvas" id="flowCanvas"></div>
+    <div class="flow-legend">
+      <span><i class="lg active"></i>当前生效</span>
+      <span><i class="lg"></i>未启用情景</span>
+      <span><i class="lg dash"></i>未生效路径</span>
+    </div>
+    <div class="flow-hint" id="flowHint" role="status" aria-live="polite"></div>
+  </section>
+
+  <div class="banner error hidden" id="errorBanner" role="alert"></div>
+  <div class="loading" id="loading">正在读取配置…</div>
+  <section id="profiles" hidden></section>
+
+  <section class="card webrtc-card">
+    <div class="card-head">
+      <h2>WebRTC 泄露防护</h2>
+      <button class="switch on" id="webrtcToggle" type="button" role="switch" aria-checked="true" aria-label="WebRTC 泄露防护开关"><i></i></button>
+    </div>
+    <p>WebRTC 会通过 STUN/TURN 绕过代理，暴露本机或真实公网 IP。开启后，代理情景强制 UDP 只走代理通道；直连时仅隐藏内网地址，不影响本地通话。</p>
+    <div class="webrtc-state">当前生效策略 <strong id="webrtcPolicyLabel">读取中</strong></div>
+  </section>
+
+  <section class="card about">
+    <h2>权限与隐私</h2>
+    <p>本扩展只申请 <code>proxy</code>、<code>storage</code>、<code>alarms</code>、<code>privacy</code> 四项权限，以及一个仅用于出口 IP 探测的主机权限。不读取历史记录、不采集浏览行为、不上传任何配置。</p>
+    <p>代理账号凭据不写入磁盘；若代理需要认证，浏览器会自行弹出登录框。自检请求不携带 URL、Cookie 或身份信息。</p>
+  </section>
+
+  <div class="save-bar">
+    <span class="save-hint" id="saveHint">未保存的修改不会影响当前代理</span>
+    <button class="btn btn-ghost" id="resetBtn" type="button">重新读取</button>
+    <button class="btn btn-primary" id="saveBtn" type="button">保存更改</button>
+  </div>
+</main>
+</body>
+</html>

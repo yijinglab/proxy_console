@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>代理控制台</title>
+  <script type="module" crossorigin src="/assets/index.html-OEtVJYt5.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/flow-jkkz6j54.js">
+  <link rel="modulepreload" crossorigin href="/assets/profiles-DEoUAxra.js">
+  <link rel="modulepreload" crossorigin href="/assets/status-o_q0pPdI.js">
+  <link rel="stylesheet" crossorigin href="/assets/flow-DfcvRf-P.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-D5_ulcNa.css">
+</head>
+<body>
+<div class="app" id="app">
+  <h1 class="sr-only">代理控制台：查看当前代理状态、切换情景并自检出口 IP</h1>
+
+  <div class="popup-head">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div><strong>代理控制台</strong><span>proxy console</span></div>
+    </div>
+    <button class="icon-btn" id="settingsBtn" type="button" aria-label="打开设置页">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+        <defs>
+          <linearGradient id="gearBody" x1="12" x2="12" y1="2" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6ab9ff"/><stop offset="1" stop-color="#3a3dff"/></linearGradient>
+          <linearGradient id="gearCore" x1="12" x2="12" y1="2.528" y2="21.95" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#80c3ff"/></linearGradient>
+        </defs>
+        <path fill="url(#gearBody)" d="M20.94,14.75c0.41,0.3,0.53,0.85,0.28,1.28l-1.12,1.94c-0.25,0.43-0.79,0.61-1.24,0.4l-0.09-0.04c-0.73-0.33-1.57-0.21-2.22,0.25c-0.36,0.24-0.74,0.46-1.13,0.65c-0.73,0.34-1.24,1-1.32,1.79l-0.01,0.1c-0.05,0.5-0.47,0.88-0.97,0.88h-2.24c-0.5,0-0.92-0.38-0.98-0.98c-0.08-0.79-0.59-1.45-1.31-1.79c-0.4-0.19-0.78-0.41-1.14-0.65C6.8,18.12,5.96,18,5.23,18.33l-0.09,0.04c-0.45,0.21-0.99,0.03-1.24-0.4l-1.12-1.94c-0.25-0.43-0.13-0.98,0.28-1.28l0.08-0.06c0.65-0.46,0.96-1.24,0.89-2.04C4.01,12.44,4,12.22,4,12c0-0.22,0.01-0.44,0.03-0.65c0.07-0.8-0.24-1.58-0.89-2.04L3.06,9.25C2.65,8.95,2.53,8.4,2.78,7.97L3.9,6.03c0.25-0.43,0.79-0.61,1.24-0.4l0.09,0.04C5.96,6,6.8,5.88,7.45,5.42C7.8,5.18,8.17,4.97,8.56,4.78c0.73-0.35,1.26-1.02,1.35-1.83V2.88C9.96,2.38,10.38,2,10.88,2h2.24c0.5,0,0.92,0.38,0.97,0.89v0.06c0.09,0.81,0.62,1.48,1.35,1.83c0.39,0.19,0.76,0.4,1.11,0.64C17.2,5.88,18.04,6,18.77,5.67l0.09-0.04c0.45-0.21,0.99-0.03,1.24,0.4l1.12,1.94c0.25,0.43,0.13,0.98-0.28,1.28l-0.08,0.06c-0.65,0.46-0.96,1.24-0.89,2.04C19.99,11.56,20,11.78,20,12c0,0.22-0.01,0.44-0.03,0.65c-0.07,0.8,0.24,1.58,0.89,2.04L20.94,14.75z"/>
+        <circle cx="12" cy="12" r="3.5" fill="url(#gearCore)"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="banner info hidden" id="previewBanner">预览模式 · 当前页面未连接真实代理，交互数据仅为演示</div>
+  <div class="banner error hidden" id="errorBanner" role="alert"></div>
+
+  <section class="flow-card popup-flow" id="flowCard" data-health="direct">
+    <div class="flow-head">
+      <span class="flow-title">流量走向</span>
+      <span class="flow-state" id="statusLabel">正在读取状态</span>
+    </div>
+    <div class="flow-canvas" id="flowCanvas"></div>
+    <div class="flow-statusbar">
+      <span class="flow-state-dot"></span>
+      <span class="flow-ip" id="statusIp">正在读取状态…</span>
+      <button class="check-btn" id="checkBtn" type="button" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 11a8 8 0 1 0-2.3 6.3M20 5v6h-6"/></svg>
+        <span id="checkLabel">自检</span>
+      </button>
+      <div class="check-track" id="checkTrack"><i></i></div>
+    </div>
+  </section>
+
+  <div class="segmented" role="tablist" aria-label="弹窗视图">
+    <button class="seg active" data-tab="profiles" role="tab" aria-selected="true" type="button">情景</button>
+    <button class="seg" data-tab="rules" role="tab" aria-selected="false" type="button">规则 <span class="count" id="ruleCount">0</span></button>
+    <button class="seg" data-tab="perms" role="tab" aria-selected="false" type="button">权限</button>
+  </div>
+
+  <div class="tab-panel" id="panelProfiles" role="tabpanel">
+    <div class="panel-cap">快速切换 <span>1 / 2 / 3</span></div>
+    <div class="loading" id="profileLoading">正在读取情景…</div>
+    <div id="profileList" role="radiogroup" aria-label="代理情景"></div>
+  </div>
+
+  <div class="tab-panel hidden" id="panelRules" role="tabpanel">
+    <div class="panel-cap">当前情景的分流规则 <span id="activeRuleCount">0 条生效</span></div>
+    <div id="ruleList"></div>
+    <div class="note">规则自上而下匹配，首条命中即生效。编辑规则请前往设置页。</div>
+  </div>
+
+  <div class="tab-panel hidden" id="panelPerms" role="tabpanel">
+    <div class="panel-cap">最小权限 <span>MV3</span></div>
+    <div class="perm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <div><strong>proxy</strong><p>仅在切换情景时写入，写入后回读确认控制权。</p></div>
+    </div>
+    <div class="perm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <div><strong>storage.session</strong><p>运行状态与自检结果只存会话内存，关闭浏览器即清除。</p></div>
+    </div>
+    <div class="perm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <div><strong>不申请 history / tabs</strong><p>不读取访问历史，不采集浏览行为。</p></div>
+    </div>
+    <div class="perm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+      <div><strong>privacy · WebRTC 防泄露</strong><p>代理情景仅允许代理 UDP，避免 STUN 暴露真实 IP。当前策略 <span id="webrtcPolicyLabel">读取中</span>。</p></div>
+    </div>
+    <div class="perm-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg>
+      <div>自检只请求出口 IP 探测端点，不带 URL、Cookie 与身份信息；凭据不落盘。</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span id="toastText"></span>
+    <button type="button" id="toastAction">撤销</button>
+  </div>
+
+  <div class="popup-foot">
+    <button class="foot-btn" id="undoBtn" type="button" disabled>撤销切换</button>
+    <span class="foot-hint">Alt + P 唤起</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+function n(e,c,d="-"){const i=e.profiles.find(l=>l.id===e.activeProfileId),t=!i||i.mode==="direct";return{activeProfileId:e.activeProfileId,health:t?"direct":"connected",message:t?"直连模式":"已连接",latencyMs:null,exitIp:null,updatedAt:c,traceId:d,webrtcPolicy:null}}export{n as d};
